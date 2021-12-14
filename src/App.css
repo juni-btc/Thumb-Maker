@@ -4,8 +4,9 @@
 a{ text-decoration: none; color: none; }
 ul, ol{ padding-left: 0; }
 button{ 
-    outline: 0; border-inline: 0; border-block: none; cursor: pointer; 
-    background-color: #e3e6ed; padding: 10px; margin-right: 15px; font-size: 15px;
+    position: relative; outline: 0; border-inline: 0; border-block: none; cursor: pointer; 
+    background-color: #e3e6ed; padding: 10px; height: 40px; font-size: 15px;
+    border-radius: 8px;
 }
 
 :root{
@@ -21,14 +22,16 @@ button{
 /* ----------- Header ----------- */
 .header{
     position: fixed; top: 0; left: 0;
-    width: 100%;
+    width: 100%; height: var(--header-height);
     background-color: #555555;
     /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
     z-index: 9999;
 }
-.header-wrap{
-    
-    height: var(--header-height);
+
+.logo{
+    display: inline-block;
+    font-size: 22px;
+    height: 25px; margin: 20px 0 20px 50px;
 }
 
 /* ----------- Header ----------- */
@@ -56,18 +59,9 @@ button{
 .thumb-control{
     width: var(--control-width);
     background-color: #f5f5f5;
+    overflow: scroll;
 }
 
-#target{
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    display: inline-block;
-    vertical-align: middle;
-    width: 1080px;
-    height: 600px;
-    border: 1px solid #dfdfdf;
-}
 @media screen and (max-width: 1480px) {
     .thumb-view{
         height: 640px;
@@ -85,19 +79,46 @@ button{
 }
 .sizeBox>h2{ padding: 0px 0 20px 0 !important; }
 
-
-.sizeBox>button:last-child{ margin-right: 0px;}
-.sizeBox>button>span{ display: block; font-size: 15px; }
-.sizeBox>button>span:first-child{ margin-bottom: 3px; }
-
-.bgBox>input[type="file"]{ display: none !important; }
-.bgBox button{ display: block; width: 100%; margin-bottom: 12px; }
-.uploadBtn{ display: block; margin: 0 0 12px 0; width: 100%; }
-.uploadBtn>label{ font-size: 15px; }
-
-.textBox>input[type="text"]{
-    display: block; width: 100%; padding: 5px; font-size: 15px; outline: 0;
+.oneBtn-box, .twoBtn-box, .thirdBtn-box{
+    position: relative; height: 40px; margin-bottom: 10px;
 }
+.sizeBtn{ padding: 8px; height: auto; }
+.sizeBtn>p{ margin: 3px 0; }
+
+.oneBtn-box>button{ width: 100%; }
+.twoBtn-box>button{ width: calc(50% - 5px); }
+.twoBtn-box>button:first-child{ float: left; }
+.twoBtn-box>button:last-child{ float: right; }
+.thirdBtn-box{ height: 60px; }
+.thirdBtn-box>button{ width: calc(33% - 5px); }
+.thirdBtn-box>button:first-child{ float:left; }
+.thirdBtn-box>button:last-child{ float:right; }
+.oneInput-box{ position: relative;}
+.oneInput-box>input[type="text"]{ 
+    display: block; width: 100%; 
+    padding: 5px 35px 5px 5px; font-size: 15px; outline: 0; 
+}
+
+#bgImg-Input{ display: none; }
+.uploadBtn{ position: relative; padding: 0; }
+.uploadBtn>label{
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    line-height: 40px; cursor: pointer; 
+}
+
+
+button>.colorPicker{
+    width: 100%; opacity: 0;
+}
+.colorPicker{
+    position: absolute; top: 0; right: 0; width: 30px; height: 100%; cursor: pointer;
+}
+.donwBtn{
+    margin-top: 20px;
+}
+
+
 /* ----------- Main ----------- */
 /* ----------- Footer ----------- */
 .footer-wrap{
