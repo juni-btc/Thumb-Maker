@@ -74,10 +74,10 @@ button{
 
 /* ------ Control Box ------ */
 .thumb-control>div>h2{
-    padding: 20px 0 20px 0;
+    position: relative; padding: 20px 0 20px 0;
     font-size: 18px; text-align: left;
 }
-.sizeBox>h2{ padding: 0px 0 20px 0 !important; }
+.sizeBox>h2{ padding: 0px 0 20px 0 !important; position: relative; }
 
 .oneBtn-box, .twoBtn-box, .thirdBtn-box{
     position: relative; height: 40px; margin-bottom: 10px;
@@ -93,6 +93,13 @@ button{
 .thirdBtn-box>button{ width: calc(33% - 5px); }
 .thirdBtn-box>button:first-child{ float:left; }
 .thirdBtn-box>button:last-child{ float:right; }
+.fourBtn-box>button{ 
+    width: calc(25% - 6px);
+    margin-right: 8px;
+}
+.fourBtn-box>button:last-child{
+    margin-right: 0;
+}
 .oneInput-box{ position: relative;}
 .oneInput-box>input[type="text"]{ 
     display: block; width: 100%; 
@@ -106,7 +113,7 @@ button{
     top: 0; left: 0; width: 100%; height: 100%;
     line-height: 40px; cursor: pointer; 
 }
-
+.h40{ height: 40px; }
 
 button>.colorPicker{
     width: 100%; opacity: 0;
@@ -114,9 +121,19 @@ button>.colorPicker{
 .colorPicker{
     position: absolute; top: 0; right: 0; width: 30px; height: 100%; cursor: pointer;
 }
-.donwBtn{
-    margin-top: 20px;
+.bgCover{
+    position: absolute; top: 50%; right: 5px;
+    transform: translate(0, -50%);
 }
+.bgCover{ height: 20px; }
+.bgCover>input[type="checkbox"]{
+    width: 18px; height: 18px; vertical-align: top;
+}
+.bgCover>span{ 
+    font-weight: 500; font-size: 16px; 
+    line-height: 22px; vertical-align: top;
+}
+.donwBtn{ margin-top: 20px; }
 
 
 /* ----------- Main ----------- */
