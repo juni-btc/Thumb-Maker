@@ -323,8 +323,8 @@ const ThumbMaker = () => {
                 </div>
 
                 <div className="twoBtn-box donwBtn">
-                    <button onClick={openTap}>새탭에서 열기</button>
-                    <button onClick={download}>다운로드</button>
+                    <button onClick={openTap} class="btn1">클립보드 복사</button>
+                    <button onClick={download} class="btn1">다운로드</button>
                 </div>
 
             </Control>

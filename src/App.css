@@ -136,6 +136,19 @@ button>.colorPicker{
 .donwBtn{ margin-top: 20px; }
 
 
+/* -------- Button Style -------- */
+.btn1{
+    background-color: #808080 !important; color: #fff;    
+    transition: 0.3s ease;
+}
+.btn1:hover{
+    background-color: #dadada !important;
+    border: 1px solid #5a5a5a;
+    color: #000; 
+}
+
+/* -------- Button Style -------- */
+
 /* ----------- Main ----------- */
 /* ----------- Footer ----------- */
 .footer-wrap{
