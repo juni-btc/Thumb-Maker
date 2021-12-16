@@ -7,18 +7,20 @@ import html2canvas from 'html2canvas';
 
 
 
-const ThumbMaker = () => {
-    
-    const canvasEl = useRef(null);
+const ThumbMaker = () => {  
+    const { ClipboardItem } = window;
+    const canvasEl = useRef(null);  
     const coverEl = useRef(null);
     const [loadImg, setLoadImg] = useState();
+    const [isLinear, setIsLinear] = useState(false);
     // Canvas State
     const [cvSize, setCvSize] = useState([960, 540, 0]); //Canvas Size [width, height, mode]
     const [cvCover, setCvCover] = useState('none');
     const [isImage, setIsImage] = useState(false);
     const [border, setBorder] = useState('0'); //Canvas Border Size
     const [borderColor, setBorderColor] = useState('#fff'); //Canvas Border Color
-    const [BgColor, setBgColor] = useState('#fff'); //Canvas Color
+    const [bgColor, setBgColor] = useState('#fff'); //Canvas Color 
+    const [linearColor, setLinearColor] = useState(['', '']);
     // Text State
     const [titleTxt, setTitleTxt] = useState('Title'); //Title Text
     const [titleColor, setTitleColor] = useState('#000'); //Title Color
@@ -40,16 +42,24 @@ const ThumbMaker = () => {
 
     }, [subTxt], [cvSize]) 
 
-    useEffect(()=> { // 캔버스 크기 변경
+    useEffect(()=> { // 캔버스 크기 변경시 초기 설정
+        console.log('이미지 ' + isImage);
+        console.log('그라데이션 ' +isLinear);
         const canvas = canvasEl.current;
         const ctx = canvas.getContext('2d');
         canvas.width = cvSize[0];
         canvas.height = cvSize[1];
-        if(!isImage){
-            ctx.fillStyle = BgColor; 
-            ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
-        }else{
+        if(isImage && !isLinear){ //이미자가 있을 경우
             ctx.drawImage(loadImg, 0, 0, cvSize[0], cvSize[1]);
+        }else if(!isImage && isLinear){ //그라데이션일 경우
+            const gradient = ctx.createLinearGradient(0,0,0,cvSize[1]);
+            gradient.addColorStop(0, linearColor[0]);
+            gradient.addColorStop(1, linearColor[1]);
+            ctx.fillStyle=gradient;
+            ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
+        }else{ //단색일 경우
+            ctx.fillStyle = bgColor; 
+            ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
         }
         
     }, [cvSize]);
@@ -86,6 +96,16 @@ const ThumbMaker = () => {
     }
     /* --------------- Image ----------------- */
 
+    const changeSize = (e) => {
+        const chk = e.target.getAttribute('data-size');
+
+        switch(chk){
+            case '1' : { setCvSize([960, 540, 0]); break; }
+            case '2' : { setCvSize([960, 720, 1]); break; }
+            case '3' : { setCvSize([800, 800, 2]); break; }
+        }
+    
+    }
 
     const drawTxt = (e) => {
         const chk = e.target.getAttribute('data-id');
@@ -117,9 +137,26 @@ const ThumbMaker = () => {
             case 'bgColor' : {
                 setBgColor(e.target.value);
                 setIsImage(false);
-
+                setIsLinear(false);
                 const ctx = canvasEl.current.getContext('2d');
                 ctx.fillStyle = e.target.value;
+                ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
+                break;
+            }
+            case 'linearBg' :{
+                setIsImage(false);
+                setIsLinear(true);
+
+                const ctx = canvasEl.current.getContext('2d');
+                const gradient = ctx.createLinearGradient(0,0,0,cvSize[1]);
+                const linear = [randomColor(), randomColor()];
+
+                setLinearColor([linear[0], linear[1]]);
+                setBgColor(`linear-gradient( to bottom, ${linear[0]}, ${linear[1]})`)
+
+                gradient.addColorStop(0, linear[0]);
+                gradient.addColorStop(1, linear[1]);
+                ctx.fillStyle=gradient;
                 ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
                 break;
             }
@@ -127,6 +164,14 @@ const ThumbMaker = () => {
                 setBorderColor(e.target.value); break;
             }
         }
+    }
+
+    const randomColor = () =>{
+        const r = Math.floor(Math.random() * (255 - 150 + 1) + 150);
+        const g = Math.floor(Math.random() * (255 - 150 + 1) + 150);
+        const b = Math.floor(Math.random() * (255 - 150 + 1) + 150);
+
+        return '#'+r.toString(16)+g.toString(16)+b.toString(16);
     }
 
     const isCover = () => {
@@ -140,28 +185,17 @@ const ThumbMaker = () => {
 
     const randomBg = () => {
         
-        const r = (Math.random() * (255 - 150 + 1) + 150).toFixed(0);
-        const g = (Math.random() * (255 - 150 + 1) + 150).toFixed(0);
-        const b = (Math.random() * (255 - 150 + 1) + 150).toFixed(0);
+        const color = randomColor();
         const ctx = canvasEl.current.getContext('2d');
-        
-        setIsImage(false);
-        setBgColor(`rgb(${r}, ${g}, ${b})`);
 
-        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+        setIsImage(false);
+        setIsLinear(false);
+        setBgColor(color);
+
+        ctx.fillStyle = color;
         ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
     }
 
-    const changeSize = (e) => {
-        const chk = e.target.getAttribute('data-size');
-
-        switch(chk){
-            case '1' : { setCvSize([960, 540, 0]); break; }
-            case '2' : { setCvSize([960, 720, 1]); break; }
-            case '3' : { setCvSize([800, 800, 2]); break; }
-        }
-    
-    }
 
     const changeBorder = (e) => { setBorder(e.target.getAttribute('data-size')); }
 
@@ -183,9 +217,14 @@ const ThumbMaker = () => {
 
     const openTap = () => {
         html2canvas(document.querySelector('#canvasWrap')).then(canvas=>{
-            canvas.toBlob(res=>{
-                const url = URL.createObjectURL(res);
-                window.open(url);
+            canvas.toBlob(blob=>{
+                
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        'image/png': blob
+                    })
+                ]);
+                
             });
         });
     }
@@ -234,16 +273,15 @@ const ThumbMaker = () => {
                             <label htmlFor="bgImg-Input">이미지 업로드</label>
                         </button>
                     </div>
+                    <div className="oneBtn-box">
+                        <button data-id="linearBg" onClick={changeColor}>그라데이션 랜덤</button>
+                    </div>      
                     <div className="twoBtn-box">
                         <button>단색
                         <input type="color" data-id="bgColor" onChange={changeColor} className="colorPicker" value="#eeeeee"/>
                         </button>
                         <button onClick={randomBg}>단색 랜덤</button>
-                    </div>
-                    <div className="twoBtn-box">
-                        <button>그라데이션</button>
-                        <button>그라데이션 랜덤</button>
-                    </div>             
+                    </div>       
                     
                 </div>
                 <div className="titleWrap">
@@ -318,7 +356,7 @@ const Canvas = styled.canvas`
 const TitleH = styled.h1`
     position: absolute; top: ${props=> props.top}%; left: 50.05%; transform: translate(-50%, -50%);
     width: 100%;  height: 54px; padding: 0 30px;
-    font-size: 60px; font-family: 'Noto Sans';
+    font-size: 56px; font-family: 'Noto Sans';
     color: ${props=> props.color}; transition: top 0.3s ease;
     z-index: 110;`
 
@@ -334,7 +372,7 @@ const CateH = styled.h3`
     position: absolute; bottom: 7%; left: 50%;
     transform: translate(-50%, -50%);
     font-size: 20px; font-family: 'Noto Sans';
-    height: 22px; color: ${props=> props.color};    
+    height: 24px; color: ${props=> props.color};    
     font-family: 'Noto Sans';
     z-index: 110;
 `
