@@ -10,7 +10,7 @@ const Header = () => {
                     <h1 className='logo'>
                         <a href="/">
                             <img src={logo} alt="logo" />
-                            Simple Thumb Maker
+                            Thumbnail Maker
                         </a>
                     </h1>
                 </div>

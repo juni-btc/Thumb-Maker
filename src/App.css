@@ -38,7 +38,7 @@ background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+
 }
 .logo>a{
     display: inline-block; margin: 10px 0;
-    color: #000; font-size: 18px;
+    color: #fff; font-size: 20px;
 }
 .logo>a>img{
     width: 45px; height: 45px;
