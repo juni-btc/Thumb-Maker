@@ -5,41 +5,66 @@ a{ text-decoration: none; color: none; }
 ul, ol{ padding-left: 0; }
 button{ 
     position: relative; outline: 0; border-inline: 0; border-block: none; cursor: pointer; 
-    background-color: #e3e6ed; padding: 10px; height: 40px; font-size: 15px;
-    border-radius: 8px;
+    background-color: #e1e4eb; padding: 10px; height: 40px; font-size: 16px;
+    border-radius: 7px;
 }
-
+a{ text-decoration: none;}
 :root{
     --header-height: 65px;
     --control-width: 350px;
 }
 
 /* ----------- common ----------- */
-#wrap{
-    position: relative;
-}
+#wrap{ position: relative; }
 /* ----------- common ----------- */
 /* ----------- Header ----------- */
 .header{
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: var(--header-height);
-    background-color: #555555;
-    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px; */
+    position: fixed; top: 0; left: 0; width:100%;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     z-index: 9999;
 }
 
-.logo{
-    display: inline-block;
-    font-size: 22px;
-    height: 25px; margin: 20px 0 20px 50px;
+.header-wrap{ 
+    max-width: 100%; height: var(--header-height); padding: 0 20px;
+    background: #12c2e9;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
+.logo{
+    position: relative; display: inline-block;
+    height: 100%;
+}
+.logo>a{
+    display: inline-block; margin: 10px 0;
+    color: #000; font-size: 18px;
+}
+.logo>a>img{
+    width: 45px; height: 45px;
+    vertical-align: middle; margin-right: 5px;
+}
+@media screen and (max-width: 1150px) {
+    .header{ position: relative; }
+    .header-wrap{ 
+        max-width: 960px;
+    }
+}
+@media screen and (max-width: 500px){
+    .header-wrap{ 
+        padding: 0 10px;
+    }
+    .logo>a{
+        font-size: 16px;
+    }
+}
 /* ----------- Header ----------- */
 /* ----------- Main ----------- */
 .main{
     position: relative;
     width: 100vw;
     z-index: 99;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .thumb-view, .thumb-control{
@@ -62,16 +87,31 @@ button{
     overflow: scroll;
 }
 
-@media screen and (max-width: 1480px) {
-    .thumb-view{
-        height: 640px;
+@media screen and (max-width: 1150px) {
+    .main{
+        max-width: 960px; 
     }
-    .thumb-view, .thumb-control{
-        width: 100%;
+    .thumb-view{
         display: block;
+        width: 100%; height: auto;
+        margin-top: 0;
+        border-left: 1px solid #eeeeee;
+        border-right: 1px solid #eeeeee;
+    }
+    .thumb-control{
+        width: 100%; padding: 25px 15px 10px 15px;
+        margin-top: 0;
+    }
+    .thumb-control{
+        height: auto;
     }
 }
 
+@media screen and (max-width: 765px){
+    .thumb-view{
+        padding: 15px 10px;
+    }
+}
 /* ------ Control Box ------ */
 .thumb-control>div>h2{
     position: relative; padding: 20px 0 20px 0;
@@ -82,13 +122,15 @@ button{
 .oneBtn-box, .twoBtn-box, .thirdBtn-box{
     position: relative; height: 40px; margin-bottom: 10px;
 }
-.sizeBtn{ padding: 8px; height: auto; }
+.sizeBtn{ padding: 8px; height: 40px; }
 .sizeBtn>p{ margin: 3px 0; }
 
 .oneBtn-box>button{ width: 100%; }
 .twoBtn-box>button{ width: calc(50% - 5px); }
 .twoBtn-box>button:first-child{ float: left; }
 .twoBtn-box>button:last-child{ float: right; }
+.twoBtn-box:last-child{ margin-bottom: 0; }
+
 .thirdBtn-box{ height: 60px; }
 .thirdBtn-box>button{ width: calc(33% - 5px); }
 .thirdBtn-box>button:first-child{ float:left; }
@@ -102,8 +144,9 @@ button{
 }
 .oneInput-box{ position: relative;}
 .oneInput-box>input[type="text"]{ 
-    display: block; width: 100%;  height: 30px;
-    padding: 5px 35px 5px 5px; font-size: 15px; outline: 0; 
+    display: block; width: 100%;  height: 33px;
+    padding: 5px 55px 5px 6px; font-size: 17px; outline: 0; 
+    border-radius: 5px; border: 1px solid #808080;
 }
 
 #bgImg-Input{ display: none; }
@@ -119,32 +162,42 @@ button>.colorPicker{
     width: 100%; opacity: 0;
 }
 .colorPicker{
-    position: absolute; top: 0; right: 0; width: 30px; height: 100%; cursor: pointer;
+    position: absolute; top: 0; right: 0; width: 50px; height: 100%; cursor: pointer; 
+    border-top-right-radius: 5px; border-bottom-right-radius: 5px;
 }
-.bgCover{
+.optionChk{
     position: absolute; top: 50%; right: 5px;
     transform: translate(0, -50%);
 }
-.bgCover{ height: 20px; }
-.bgCover>input[type="checkbox"]{
-    width: 18px; height: 18px; vertical-align: top;
-}
-.bgCover>span{ 
-    font-weight: 500; font-size: 16px; 
-    line-height: 22px; vertical-align: top;
-}
-.donwBtn{ margin-top: 20px; }
 
+.optionChk>input[type="checkbox"]{
+    position: absolute; top: 50%; left: 0; transform: translate(0, -50%);
+    display: inline-block; width: 18px; height: 18px; outline: 0;
+}
+.optionChk>span{ 
+    font-weight: normal; font-size: 15px; padding-left: 25px;
+    line-height: 25px; vertical-align: top;
+}
 
+.doneBox{
+    margin-top: 20px;
+}
+
+@media screen and(max-width: 500px) {
+    .optionChk>span{ 
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
 /* -------- Button Style -------- */
-.btn1{
-    background-color: #808080 !important; color: #fff;    
-    transition: 0.3s ease;
+.btn1{ 
+    background-color: rgba(0,0,0,0.6) !important;
+    color: #fff;
+    transition: 0.4s ease; 
 }
 .btn1:hover{
-    background-color: #dadada !important;
-    border: 1px solid #5a5a5a;
-    color: #000; 
+    background-color: #000 !important;
+    color: #fff; 
 }
 
 /* -------- Button Style -------- */

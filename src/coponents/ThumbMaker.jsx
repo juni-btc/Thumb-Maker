@@ -9,8 +9,8 @@ import html2canvas from 'html2canvas';
 
 const ThumbMaker = () => {  
     const { ClipboardItem } = window;
+    const canvasWrap = useRef(null);
     const canvasEl = useRef(null);  
-    const coverEl = useRef(null);
     const [loadImg, setLoadImg] = useState();
     const [isLinear, setIsLinear] = useState(false);
     // Canvas State
@@ -30,8 +30,10 @@ const ThumbMaker = () => {
     const [subTxtTop, setSubTxtTop] = useState(57); //subTitle CSS Top Size
     const [cateTxt, setCateTxt] = useState('Category'); //Category Text
     const [cateColor, setCateColor] = useState('#000'); //Category Color
+    // checkbox Stat
+    const coverEl = useRef(null);
+    const [txtShadow, setTxtShadow] = useState('none');
 
-    
     useEffect(()=>{ //소제목이 없을 경우 제목 위치 변경
         if(subTxt === ''){
             setTitleTop(49);
@@ -39,16 +41,15 @@ const ThumbMaker = () => {
             setTitleTop(38);
             setSubTxtTop(57); 
         }
-
-    }, [subTxt], [cvSize]) 
+    }, [subTxt]) 
 
     useEffect(()=> { // 캔버스 크기 변경시 초기 설정
-        console.log('이미지 ' + isImage);
-        console.log('그라데이션 ' +isLinear);
+        
         const canvas = canvasEl.current;
         const ctx = canvas.getContext('2d');
         canvas.width = cvSize[0];
         canvas.height = cvSize[1];
+
         if(isImage && !isLinear){ //이미자가 있을 경우
             ctx.drawImage(loadImg, 0, 0, cvSize[0], cvSize[1]);
         }else if(!isImage && isLinear){ //그라데이션일 경우
@@ -67,12 +68,13 @@ const ThumbMaker = () => {
     /* --------------- Image ----------------- */
     const addImage = (e) => { 
         const files = e.target.files;
+        console.log(files)    
         if(files.length !== 0){
-            console.log(files);
             fileRead(files[0]);
         }else{
             console.log("이미지 파일이 없음")
         }
+        e.target.value = '';
     }
     const fileRead = (file) => { //이미지 로드 후 캔버스에 삽입
         const reader = new FileReader();
@@ -82,13 +84,16 @@ const ThumbMaker = () => {
             image.src = e.target.result;
             image.onload = () => {
                 setLoadImg(image);
+                setIsImage(true);
+                setIsLinear(false);
+
                 drawImage(image); //캔버스에 이미지 삽입
             }
         }
-        setIsImage(true);
+        
     }
     const drawImage = (image) => { //캔버스에 이미지 삽입
-        
+        console.log(image)
         const ctx = canvasEl.current.getContext('2d');
         canvasEl.current.width = cvSize[0];
         canvasEl.current.height = cvSize[1];
@@ -101,8 +106,9 @@ const ThumbMaker = () => {
 
         switch(chk){
             case '1' : { setCvSize([960, 540, 0]); break; }
-            case '2' : { setCvSize([960, 720, 1]); break; }
-            case '3' : { setCvSize([800, 800, 2]); break; }
+            case '2' : { setCvSize([720, 540, 1]); break; }
+            case '3' : { setCvSize([540, 720, 2]); break; }
+            case '4' : { setCvSize([600, 600, 3]); break; }
         }
     
     }
@@ -152,7 +158,7 @@ const ThumbMaker = () => {
                 const linear = [randomColor(), randomColor()];
 
                 setLinearColor([linear[0], linear[1]]);
-                setBgColor(`linear-gradient( to bottom, ${linear[0]}, ${linear[1]})`)
+                setBgColor(`linear-gradient( to bottom, ${linear[0]}, ${linear[1]})`);
 
                 gradient.addColorStop(0, linear[0]);
                 gradient.addColorStop(1, linear[1]);
@@ -174,24 +180,39 @@ const ThumbMaker = () => {
         return '#'+r.toString(16)+g.toString(16)+b.toString(16);
     }
 
-    const isCover = () => {
-        const chk = coverEl.current.checked;
-        if(chk !== true){
-            setCvCover('none');
+    const isCheck = (e) => {
+        const chk = e.target.checked;
+        const id = e.target.getAttribute('data-id');
+        
+        if(chk === true){
+            switch(id){
+                case 'bg-cover' : {
+                    setCvCover('block'); break;
+                }
+                case 'txt-shadow' : {
+                    setTxtShadow('2px 2px 2px rgba(0,0,0,0.3)'); break;
+                }
+            }
         }else{
-            setCvCover('block');
+            switch(id){
+                case 'bg-cover' : {
+                    setCvCover('none'); break;
+                }
+                case 'txt-shadow' : {
+                    setTxtShadow('none'); break;
+                }
+            }
         }
     }
 
     const randomBg = () => {
-        
         const color = randomColor();
         const ctx = canvasEl.current.getContext('2d');
 
         setIsImage(false);
         setIsLinear(false);
         setBgColor(color);
-
+        
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, cvSize[0], cvSize[1]);
     }
@@ -199,14 +220,14 @@ const ThumbMaker = () => {
 
     const changeBorder = (e) => { setBorder(e.target.getAttribute('data-size')); }
 
-    const download = () => {
+    const download = async() => {
         const date = new Date();   
         const year = date.getFullYear(); // 년도
         const month = date.getMonth() + 1;  // 월
         const days = date.getDate();  // 날짜
 
-        html2canvas(document.querySelector('#canvasWrap')).then(canvas=>{
-            canvas.toBlob(res=>{
+        html2canvas(canvasWrap.current).then(cv=>{
+            cv.toBlob(res=>{
                 const aTag = document.createElement('a');
                 aTag.download = `thumbnail_${year}${month}${days}.png`;
                 aTag.href = URL.createObjectURL(res);
@@ -215,16 +236,15 @@ const ThumbMaker = () => {
         });
     }
 
-    const openTap = () => {
-        html2canvas(document.querySelector('#canvasWrap')).then(canvas=>{
-            canvas.toBlob(blob=>{
-                
+    const copyImg = () => {
+
+        html2canvas(canvasWrap.current).then(cv=>{    
+            cv.toBlob(blob=>{  
                 navigator.clipboard.write([
                     new ClipboardItem({
                         'image/png': blob
                     })
                 ]);
-                
             });
         });
     }
@@ -232,9 +252,9 @@ const ThumbMaker = () => {
     return(
         <>
             <View>
-                <CanvasWrap width={cvSize[0]} height={cvSize[1]} id="canvasWrap" bg={borderColor} padding={border} cover={cvCover}>
-                    <Canvas ref={canvasEl} id="target" width={cvSize[0]} height={cvSize[1]} />
-                    <TitleH color={titleColor} top={titleTop}>{titleTxt}</TitleH>
+                <CanvasWrap width={cvSize[0]} height={cvSize[1]} id="canvasWrap" bg={borderColor} padding={border} cover={cvCover} ref={canvasWrap}>
+                    <Canvas ref={canvasEl} id="target"  />
+                    <TitleH color={titleColor} top={titleTop} txtShadow={txtShadow}>{titleTxt}</TitleH>
                     <SubH color={subColor} top={subTxtTop}>{subTxt}</SubH>
                     <CateH color={cateColor}>{cateTxt}</CateH>
                 </CanvasWrap>
@@ -242,19 +262,22 @@ const ThumbMaker = () => {
             <Control>
                 <div className="sizeBox">
                     <h2>크기</h2>
-                    <div className="thirdBtn-box">
+                    <div className="twoBtn-box">
                         <button className='sizeBtn' data-size="1" onClick={changeSize}>
-                            960x540<br/>
                             16:9
                         </button>
+                        <button className='sizeBtn'data-size="4" onClick={changeSize}>
+                            1:1
+                        </button>
+                    </div>
+                    <div className="twoBtn-box">
                         <button className='sizeBtn' data-size="2" onClick={changeSize}>
-                            960x720<br/>
                             4:3
                         </button>
                         <button className='sizeBtn'data-size="3" onClick={changeSize}>
-                            800x800<br/>
-                            1:1
+                            3:4
                         </button>
+                        
                     </div>
                     
                 </div>
@@ -262,8 +285,8 @@ const ThumbMaker = () => {
 
                     <h2>
                         배경
-                        <label htmlFor="bcInput" className="bgCover">
-                            <input type="checkbox" id="bcInput" ref={coverEl} onChange={isCover}/><span> Cover</span>
+                        <label htmlFor="bcInput" className="optionChk">
+                            <input type="checkbox" data-id="bg-cover" id="bcInput" onChange={isCheck}/><span> Cover</span>
                         </label>
                     </h2> 
                     <input type="file" id="bgImg-Input" onChange={addImage} accept="image/png, image/jpg, image/jpeg, image/webp, image/gif"/>
@@ -285,7 +308,11 @@ const ThumbMaker = () => {
                     
                 </div>
                 <div className="titleWrap">
-                    <h2>제목</h2>
+                    <h2>제목
+                        <label htmlFor="shadowInput" className="optionChk">
+                            <input type="checkbox" data-id="txt-shadow" id="shadowInput" ref={coverEl} onChange={isCheck}/><span>그림자 효과</span>
+                        </label>
+                    </h2>
                     <div className="oneInput-box">
                         <input onChange={drawTxt} type="text" defaultValue={"Title"} data-id="title"/>
                         <input type="color" data-id="title" onChange={changeColor} className="colorPicker" value={titleColor}/>
@@ -322,9 +349,9 @@ const ThumbMaker = () => {
                     
                 </div>
 
-                <div className="twoBtn-box donwBtn">
-                    <button onClick={openTap} class="btn1">클립보드 복사</button>
-                    <button onClick={download} class="btn1">다운로드</button>
+                <div className="twoBtn-box doneBox">
+                    <button onClick={copyImg} className="btn1">클립보드 복사</button>
+                    <button onClick={download} className="btn1">다운로드</button>
                 </div>
 
             </Control>
@@ -333,9 +360,8 @@ const ThumbMaker = () => {
     )
 }
 
-
 const CanvasWrap = styled.span`
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.0);
     display: inline-block; vertical-align: middle;
     width: ${props=> props.width}px; height: ${props=> props.height}px;
     background-color : ${props=>props.bg};
@@ -344,8 +370,13 @@ const CanvasWrap = styled.span`
     &:after{
         display: inline-block; width: 100%; height: 100%; 
         position: absolute; top: 0; left: 0; content: '';
-        background-color: rgba(0,0,0, 0.3); z-index: 100;
+        background-color: rgba(0,0,0, 0.2); z-index: 100;
         display: ${props=>props.cover};
+    }
+    @media screen and (max-width: 1330px) { transform: translate(-50%, -50%) scale(0.8);
+    @media screen and (max-width: 1150px) { 
+        position: relative; width: auto; height: auto; top: auto; left: auto; 
+        transform: translate(0, 0) scale(1); }
     }
 `
 const Canvas = styled.canvas`
@@ -358,7 +389,11 @@ const TitleH = styled.h1`
     width: 100%;  height: 54px; padding: 0 30px;
     font-size: 56px; font-family: 'Noto Sans';
     color: ${props=> props.color}; transition: top 0.3s ease;
-    z-index: 110;`
+    text-shadow: ${props=>props.txtShadow};
+    z-index: 110;
+    @media screen and (max-width: 765px){ font-size: 48px; }
+    @media screen and (max-width: 486px){ font-size: 40px; }
+`
 
 const SubH = styled.h2`
     position: absolute; top: ${props=>props.top}%; left: 50%;
@@ -367,6 +402,8 @@ const SubH = styled.h2`
     height: 30px; padding: 40px 0 0 0;
     border-top: 2px solid #fff;
     z-index: 110;
+    @media screen and (max-width: 765px){ font-size: 25px; padding: 25px 0; }
+    @media screen and (max-width: 486px){ font-size: 17px; padding: 15px 0; }
 `
 const CateH = styled.h3`
     position: absolute; bottom: 7%; left: 50%;
@@ -375,6 +412,8 @@ const CateH = styled.h3`
     height: 24px; color: ${props=> props.color};    
     font-family: 'Noto Sans';
     z-index: 110;
+    @media screen and (max-width: 765px){ font-size: 12px; }
+    @media screen and (max-width: 486px){ font-size: 7px; line-height: 30px; }
 `
 
 

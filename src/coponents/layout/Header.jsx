@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from '../../images/logo.png';
 
 
 const Header = () => {
@@ -6,7 +7,12 @@ const Header = () => {
         <>
             <header className='header'>
                 <div className="header-wrap">
-                    <h1 className='logo'>Web Thumbnail Maker</h1>
+                    <h1 className='logo'>
+                        <a href="/">
+                            <img src={logo} alt="logo" />
+                            Simple Thumb Maker
+                        </a>
+                    </h1>
                 </div>
             </header>
         </>
