@@ -13,6 +13,14 @@ const Header = () => {
                             Thumbnail Maker
                         </a>
                     </h1>
+                    <ul className='subMenu'>
+                        <li>
+                            <a href="https://juni-official.tistory.com/" target="_blank">
+                            <box-icon name='home' color='#ffffff' ></box-icon>
+                            </a>
+                        </li>
+                    </ul>
+                    
                 </div>
             </header>
         </>

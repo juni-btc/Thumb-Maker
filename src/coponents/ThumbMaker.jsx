@@ -5,8 +5,6 @@ import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
 
-
-
 const ThumbMaker = () => {  
     const { ClipboardItem } = window;
     const canvasWrap = useRef(null);
@@ -30,9 +28,10 @@ const ThumbMaker = () => {
     const [subTxtTop, setSubTxtTop] = useState(57); //subTitle CSS Top Size
     const [cateTxt, setCateTxt] = useState('Category'); //Category Text
     const [cateColor, setCateColor] = useState('#000'); //Category Color
-    // checkbox Stat
+    // checkbox State
     const coverEl = useRef(null);
     const [txtShadow, setTxtShadow] = useState('none');
+    const [copyMsg, setCopyMsg] = useState('클립보드 복사');
 
     useEffect(()=>{ //소제목이 없을 경우 제목 위치 변경
         if(subTxt === ''){
@@ -107,7 +106,7 @@ const ThumbMaker = () => {
         switch(chk){
             case '1' : { setCvSize([960, 540, 0]); break; }
             case '2' : { setCvSize([720, 540, 1]); break; }
-            case '3' : { setCvSize([540, 720, 2]); break; }
+            case '3' : { setCvSize([510, 680, 2]); break; }
             case '4' : { setCvSize([600, 600, 3]); break; }
         }
     
@@ -245,6 +244,10 @@ const ThumbMaker = () => {
                         'image/png': blob
                     })
                 ]);
+                setCopyMsg('복사 완료!');
+                setTimeout(()=>{
+                    setCopyMsg('클립보드 복사');
+                }, 1200);
             });
         });
     }
@@ -350,7 +353,9 @@ const ThumbMaker = () => {
                 </div>
 
                 <div className="twoBtn-box doneBox">
-                    <button onClick={copyImg} className="btn1">클립보드 복사</button>
+                    <button onClick={copyImg} className="btn1">
+                        {copyMsg}
+                    </button>
                     <button onClick={download} className="btn1">다운로드</button>
                 </div>
 
@@ -365,7 +370,9 @@ const CanvasWrap = styled.span`
     display: inline-block; vertical-align: middle;
     width: ${props=> props.width}px; height: ${props=> props.height}px;
     background-color : ${props=>props.bg};
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; padding: ${props=> props.padding}px;
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;  */
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+    padding: ${props=> props.padding}px;
     user-select: none;
     &:after{
         display: inline-block; width: 100%; height: 100%; 
