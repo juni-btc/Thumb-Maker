@@ -33,6 +33,7 @@ const ThumbMaker = () => {
     const [txtShadow, setTxtShadow] = useState('none');
     const [copyMsg, setCopyMsg] = useState('클립보드 복사');
 
+
     useEffect(()=>{ //소제목이 없을 경우 제목 위치 변경
         if(subTxt === ''){
             setTitleTop(49);
@@ -256,10 +257,10 @@ const ThumbMaker = () => {
         <>
             <View>
                 <CanvasWrap width={cvSize[0]} height={cvSize[1]} id="canvasWrap" bg={borderColor} padding={border} cover={cvCover} ref={canvasWrap}>
-                    <Canvas ref={canvasEl} id="target"  />
-                    <TitleH color={titleColor} top={titleTop} txtShadow={txtShadow}>{titleTxt}</TitleH>
-                    <SubH color={subColor} top={subTxtTop}>{subTxt}</SubH>
-                    <CateH color={cateColor}>{cateTxt}</CateH>
+                    <Canvas ref={canvasEl} id="target"/>
+                        <TitleH color={titleColor} top={titleTop} txtShadow={txtShadow}>{titleTxt}</TitleH>
+                        <SubH color={subColor} top={subTxtTop}>{subTxt}</SubH>
+                        <CateH color={cateColor}>{cateTxt}</CateH>
                 </CanvasWrap>
             </View>
             <Control>
@@ -377,8 +378,8 @@ const CanvasWrap = styled.span`
     &:after{
         display: inline-block; width: 100%; height: 100%; 
         position: absolute; top: 0; left: 0; content: '';
-        background-color: rgba(0,0,0, 0.2); z-index: 100;
-        display: ${props=>props.cover};
+        background-color: rgba(0,0,0, 0.3); z-index: 100;
+        display: ${props=>props.cover}; 
     }
     @media screen and (max-width: 1330px) { transform: translate(-50%, -50%) scale(0.8);
     @media screen and (max-width: 1150px) { 

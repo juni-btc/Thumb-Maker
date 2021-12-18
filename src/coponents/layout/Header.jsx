@@ -8,19 +8,11 @@ const Header = () => {
             <header className='header'>
                 <div className="header-wrap">
                     <h1 className='logo'>
-                        <a href="/">
+                        <a href="https://juni-official.tistory.com/" target="_blank">
                             <img src={logo} alt="logo" />
                             Thumbnail Maker
                         </a>
                     </h1>
-                    <ul className='subMenu'>
-                        <li>
-                            <a href="https://juni-official.tistory.com/" target="_blank">
-                            <box-icon name='home' color='#ffffff' ></box-icon>
-                            </a>
-                        </li>
-                    </ul>
-                    
                 </div>
             </header>
         </>
