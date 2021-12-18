@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "thumbnailmaker",
+    "site" : "thumbnailmaker",
     "public": "build",
     "ignore": [
       "firebase.json",

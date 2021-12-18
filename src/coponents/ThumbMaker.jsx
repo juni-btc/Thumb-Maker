@@ -16,18 +16,18 @@ const ThumbMaker = () => {
     const [cvCover, setCvCover] = useState('none');
     const [isImage, setIsImage] = useState(false);
     const [border, setBorder] = useState('0'); //Canvas Border Size
-    const [borderColor, setBorderColor] = useState('#fff'); //Canvas Border Color
-    const [bgColor, setBgColor] = useState('#fff'); //Canvas Color 
+    const [borderColor, setBorderColor] = useState('#ffffff'); //Canvas Border Color
+    const [bgColor, setBgColor] = useState('#ffffff'); //Canvas Color 
     const [linearColor, setLinearColor] = useState(['', '']);
     // Text State
     const [titleTxt, setTitleTxt] = useState('Title'); //Title Text
-    const [titleColor, setTitleColor] = useState('#000'); //Title Color
+    const [titleColor, setTitleColor] = useState('#000000'); //Title Color
     const [titleTop, setTitleTop] = useState(38); //Title CSS Top Size
     const [subTxt, setSubTxt] = useState('SubTitle'); //SubTitle Text
-    const [subColor, setSubColor] = useState('#000'); //SubTitle Color
+    const [subColor, setSubColor] = useState('#000000'); //SubTitle Color
     const [subTxtTop, setSubTxtTop] = useState(57); //subTitle CSS Top Size
     const [cateTxt, setCateTxt] = useState('Category'); //Category Text
-    const [cateColor, setCateColor] = useState('#000'); //Category Color
+    const [cateColor, setCateColor] = useState('#000000'); //Category Color
     // checkbox State
     const coverEl = useRef(null);
     const [txtShadow, setTxtShadow] = useState('none');

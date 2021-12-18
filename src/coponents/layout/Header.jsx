@@ -8,7 +8,7 @@ const Header = () => {
             <header className='header'>
                 <div className="header-wrap">
                     <h1 className='logo'>
-                        <a href="https://juni-official.tistory.com/" target="_blank">
+                        <a href="https://juni-official.tistory.com/" target="_blank" rel="noreferrer">
                             <img src={logo} alt="logo" />
                             Thumbnail Maker
                         </a>
