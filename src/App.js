@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './coponents/layout/Header';
 import Main from './coponents/layout/Main';
-import Footer from './coponents/layout/Footer';
+// import Footer from './coponents/layout/Footer';
 import ThumbMaker from './coponents/ThumbMaker';
 
 function App() {
