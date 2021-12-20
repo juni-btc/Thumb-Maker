@@ -1,12 +1,12 @@
 @charset "utf8";
 
-*{ box-sizing: border-box; margin: 0 auto; }
+*{ box-sizing: border-box; margin: 0 auto; font-family: 'Noto Sans KR', sans-serif; }
 a{ text-decoration: none; color: none; }
 ul, ol{ padding-left: 0; list-style: none; }
 button{ 
     position: relative; outline: 0; border-inline: 0; border-block: none; cursor: pointer; 
-    background-color: #e1e4eb; padding: 10px; height: 40px; font-size: 16px;
-    border-radius: 7px;
+    background-color: #e1e4eb; padding: 0px; height: 40px; font-size: 16px;
+    border-radius: 7px; line-height: 20px;
 }
 a{ text-decoration: none;}
 :root{
@@ -19,8 +19,7 @@ a{ text-decoration: none;}
 /* ----------- common ----------- */
 /* ----------- Header ----------- */
 .header{
-    position: fixed; top: 0; left: 0; width:100%;
-    z-index: 9999;
+    position: fixed; top: 0; left: 0; width:100%; z-index: 100;
 }
 
 .header-wrap{ 
@@ -62,9 +61,8 @@ box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1p
 /* ----------- Main ----------- */
 .main{
     position: relative;
-    width: 100vw;
-    z-index: 99;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+    width: 100vw;   
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .thumb-view, .thumb-control{
@@ -114,7 +112,7 @@ box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1p
 }
 /* ------ Control Box ------ */
 .thumb-control>div>h2{
-    position: relative; padding: 20px 0 20px 0;
+    position: relative; padding: 18px 0 18px 0; font-weight: 500;
     font-size: 18px; text-align: left;
 }
 .sizeBox>h2{ padding: 0px 0 20px 0 !important; position: relative; }
@@ -164,6 +162,7 @@ button>.colorPicker{
 .colorPicker{
     position: absolute; top: 0; right: 0; width: 50px; height: 100%; cursor: pointer; 
     border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+    border-top-left-radius: 0px; border-bottom-left-radius: 0px;
 }
 .optionChk{
     position: absolute; top: 50%; right: 5px;

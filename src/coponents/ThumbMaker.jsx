@@ -4,12 +4,17 @@ import Control from './Control';
 import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
+import Preview from './Preview';
+import { requestClipboardWritePermission } from 'copy-image-clipboard'
 
 const ThumbMaker = () => {  
-    const { ClipboardItem } = window;
+
+    // Check Clipboard Permission
+    const [perChk, setPerChk] = useState(); 
+    // Ele Ref
     const canvasWrap = useRef(null);
     const canvasEl = useRef(null);  
-    const [loadImg, setLoadImg] = useState();
+    const [uploadImg, setUploadImg] = useState();
     const [isLinear, setIsLinear] = useState(false);
     // Canvas State
     const [cvSize, setCvSize] = useState([960, 540, 0]); //Canvas Size [width, height, mode]
@@ -31,8 +36,16 @@ const ThumbMaker = () => {
     // checkbox State
     const coverEl = useRef(null);
     const [txtShadow, setTxtShadow] = useState('none');
-    const [copyMsg, setCopyMsg] = useState('클립보드 복사');
+    const [copyMsg, setCopyMsg] = useState('');
+    // preview State
+    const [preivew, setPreview] = useState(false);
 
+    useEffect(async()=> {
+        const chk = await requestClipboardWritePermission(hasPer => { return hasPer; }); //클립보드 브라우저 권한체크
+        setPerChk(chk);
+        if(chk === true){ setCopyMsg('클립보드 복사'); }
+        else{ setCopyMsg('이미지 보기'); }
+    }, [])
 
     useEffect(()=>{ //소제목이 없을 경우 제목 위치 변경
         if(subTxt === ''){
@@ -51,7 +64,7 @@ const ThumbMaker = () => {
         canvas.height = cvSize[1];
 
         if(isImage && !isLinear){ //이미자가 있을 경우
-            ctx.drawImage(loadImg, 0, 0, cvSize[0], cvSize[1]);
+            ctx.drawImage(uploadImg, 0, 0, cvSize[0], cvSize[1]);
         }else if(!isImage && isLinear){ //그라데이션일 경우
             const gradient = ctx.createLinearGradient(0,0,0,cvSize[1]);
             gradient.addColorStop(0, linearColor[0]);
@@ -83,7 +96,7 @@ const ThumbMaker = () => {
         reader.onload = (e) => {
             image.src = e.target.result;
             image.onload = () => {
-                setLoadImg(image);
+                setUploadImg(image);
                 setIsImage(true);
                 setIsLinear(false);
 
@@ -109,6 +122,7 @@ const ThumbMaker = () => {
             case '2' : { setCvSize([720, 540, 1]); break; }
             case '3' : { setCvSize([510, 680, 2]); break; }
             case '4' : { setCvSize([600, 600, 3]); break; }
+            default : { break; }
         }
     
     }
@@ -125,6 +139,7 @@ const ThumbMaker = () => {
             case 'cate' : {
                 setCateTxt(e.target.value); break;
             }
+            default : { break; }
         }
     }
 
@@ -169,6 +184,7 @@ const ThumbMaker = () => {
             case 'borderColor' : {
                 setBorderColor(e.target.value); break;
             }
+            default : { break; }
         }
     }
 
@@ -192,6 +208,7 @@ const ThumbMaker = () => {
                 case 'txt-shadow' : {
                     setTxtShadow('2px 2px 2px rgba(0,0,0,0.3)'); break;
                 }
+                default : { break; }
             }
         }else{
             switch(id){
@@ -201,6 +218,7 @@ const ThumbMaker = () => {
                 case 'txt-shadow' : {
                     setTxtShadow('none'); break;
                 }
+                default : { break; }
             }
         }
     }
@@ -220,44 +238,70 @@ const ThumbMaker = () => {
 
     const changeBorder = (e) => { setBorder(e.target.getAttribute('data-size')); }
 
-    const download = async() => {
+    const download = async() => { //이미지 다운로드
+        
+        const canvas = await captureEl();
+        const blob = await transBlob(canvas);
+        const url = URL.createObjectURL(blob);
+        const aTag = document.createElement('a');
+        aTag.download = `thumbnail-maker_${getDate()}.jpg`;
+        aTag.href = url;
+        aTag.click();
+        URL.revokeObjectURL(url);
+    }
+
+    const copyImg = async() => { // 클립보드 복사
+            const canvas = await captureEl(); 
+            const blob = await transBlob(canvas);
+            copy(blob);
+
+    }
+
+    const previewImage = async() => {
+        const canvas = await captureEl();
+        const base64 = canvas.toDataURL('image/*');
+        setPreview(base64);
+    }
+    const previewRemove = () => { setPreview(false); }
+
+    const captureEl = async() =>{ // ele => canvas
+        const canvas = await html2canvas(canvasWrap.current).then( cv=> { return cv; }); // Ele => canvas image
+        return canvas;
+    }
+
+    const transBlob = async(canvas) =>{ // canvas => blob data
+        return new Promise((resolve, reject) => {
+            canvas.toBlob((blob) => {
+                resolve(blob);
+            })
+        })
+    }
+
+    const copy = async(blob) =>{
+        const { ClipboardItem } = window;
+        navigator.clipboard.write([  //3
+            new ClipboardItem({
+              'image/png': blob //<- 복사할 blob 데이터
+            })       
+        ]);
+        setCopyMsg('복사 완료!');
+        setTimeout(()=>{ setCopyMsg('클립보드 복사'); }, 1000);
+    }
+
+    const getDate = () => {
         const date = new Date();   
         const year = date.getFullYear(); // 년도
         const month = date.getMonth() + 1;  // 월
         const days = date.getDate();  // 날짜
-
-        html2canvas(canvasWrap.current).then(cv=>{
-            cv.toBlob(res=>{
-                const aTag = document.createElement('a');
-                aTag.download = `thumbnail_${year}${month}${days}.png`;
-                aTag.href = URL.createObjectURL(res);
-                aTag.click();
-            });
-        });
-    }
-
-    const copyImg = () => {
-
-        html2canvas(canvasWrap.current).then(cv=>{    
-            cv.toBlob(blob=>{  
-                navigator.clipboard.write([
-                    new ClipboardItem({
-                        'image/png': blob
-                    })
-                ]);
-                setCopyMsg('복사 완료!');
-                setTimeout(()=>{
-                    setCopyMsg('클립보드 복사');
-                }, 1200);
-            });
-        });
+        return `${year}${month}${days}`;
     }
 
     return(
         <>
+            <Preview img={preivew} previewRemove={previewRemove}/>
             <View>
-                <CanvasWrap width={cvSize[0]} height={cvSize[1]} id="canvasWrap" bg={borderColor} padding={border} cover={cvCover} ref={canvasWrap}>
-                    <Canvas ref={canvasEl} id="target"/>
+                <CanvasWrap width={cvSize[0]} height={cvSize[1]} id="canvasWrap" cover={cvCover} ref={canvasWrap}>
+                    <Canvas ref={canvasEl} id="target" padding={border} borderColor={borderColor}/>
                         <TitleH color={titleColor} top={titleTop} txtShadow={txtShadow}>{titleTxt}</TitleH>
                         <SubH color={subColor} top={subTxtTop}>{subTxt}</SubH>
                         <CateH color={cateColor}>{cateTxt}</CateH>
@@ -354,9 +398,17 @@ const ThumbMaker = () => {
                 </div>
 
                 <div className="twoBtn-box doneBox">
-                    <button onClick={copyImg} className="btn1">
-                        {copyMsg}
-                    </button>
+                    {
+                        perChk === true
+                            ?
+                        <button onClick={copyImg} className="btn1">
+                            {copyMsg}
+                        </button>
+                            :
+                        <button className="btn1" onClick={previewImage}>
+                            이미지 보기
+                        </button>
+                    }
                     <button onClick={download} className="btn1">다운로드</button>
                 </div>
 
@@ -367,7 +419,7 @@ const ThumbMaker = () => {
 }
 
 const CanvasWrap = styled.span`
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.0);
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1);
     display: inline-block; vertical-align: middle;
     width: ${props=> props.width}px; height: ${props=> props.height}px;
     background-color : ${props=>props.bg};
@@ -390,6 +442,7 @@ const CanvasWrap = styled.span`
 const Canvas = styled.canvas`
     display: block; position: relative;
     width: 100%; height: 100%;
+    border: ${props=>props.padding}px solid ${props=>props.borderColor};
 `
 
 const TitleH = styled.h1`
