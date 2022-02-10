@@ -1,6 +1,6 @@
 # ✨ Thumbnail-Maker ✨ [링크](https://thumbnail-maker.web.app/)
 
-![image](https://user-images.githubusercontent.com/38034518/153422850-843a8463-0fc6-453c-8255-6b6b00671fb7.png)
+![image](https://user-images.githubusercontent.com/38034518/153426584-86e21b47-4f59-476c-9330-e829be713def.png)
 
 ## - 기능
 
