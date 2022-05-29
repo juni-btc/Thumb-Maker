@@ -1,25 +1,53 @@
 # ✨ Thumbnail-Maker ✨ [링크](https://thumbnail-maker.web.app/)
 
-![image](https://user-images.githubusercontent.com/38034518/153426584-86e21b47-4f59-476c-9330-e829be713def.png)
+![image](https://i0.wp.com/user-images.githubusercontent.com/38034518/153426584-86e21b47-4f59-476c-9330-e829be713def.png?w=750&ssl=1)
 
-## - 기능
+<h2><strong>썸네일 메이커</strong>  -> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
+<br>
+<img src="https://user-images.githubusercontent.com/38034518/156158206-a8cde8a0-ad0a-4288-8348-5073bc39c162.png" alt="simple-forum.png">
+<br>
+썸네일 메이커는 블로그를 운영하면서 불편했던 점인 썸네일을 쉽게 만들기 위해 리액트로 제작된 웹사이트입니다. 반응형으로 모바일 환경에서도 사용할 수 있습니다.
+<br/><br/>
 
-- 16:9, 1:1, 4:3, 3:4 비율의 캔버스 사이즈 선택 가능
-- 캔버스 배경은 단색과 그라데이션, 업로드 이미지 사용 가능
-- 테두리 길이와 색 사용 여부 설정 가능
-- 이미지 클립보드 복사 가능(Chrome/Edge 브라우저에서 지원)
-- 이미지 보기(Safari, Firefox, opera 사용자를 위한 Preview 기능)
-- 이미지 다운로드 가능
+<ul><li>Simpe Forum -> 🔗 <strong><a href="https://github.com/junheeleeme/Thumb-Maker"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li><li>썸네일 메이커 -> 🔗 <strong><a href="https://github.com/junheeleeme/Thumb-Maker"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li></ul>
 
 
-## - 레퍼런스
+<br>
+<h3><strong><span style="color: rgb(38, 38, 38); font-family: -apple-system, 'system-ui', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" data-raw-html="span">📌</span> 개발 기간</strong></h3>
+<ul>
+  <li>
+    2021.12.14 ~ 2021.12.19
+  </li>
+</ul>
 
-![image](https://user-images.githubusercontent.com/38034518/146635811-8ae738d5-910d-47b1-8127-8dadf77d1558.png)
 
-![image](https://user-images.githubusercontent.com/38034518/153427454-5c64f92f-1449-4161-85dc-82a3be281262.png)
+<br>
+<h3><strong><span style="color: rgb(38, 38, 38); font-family: -apple-system, 'system-ui', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" data-raw-html="span">📌</span> 사용한 스킬 및 라이브러리</strong></h3>
+<ul>
+  <li>
+    React, Styled-Components, Firebase Deploy, JavaScript, html2canvas
+  </li>
+</ul>
 
-![image](https://user-images.githubusercontent.com/38034518/146635906-a605216a-36b1-41b0-a50f-0f91f4218dc5.png)
-
-![image](https://user-images.githubusercontent.com/38034518/146636521-bd81ffe6-1990-45cc-823b-9bd5b6315fd0.png)
-
-![image](https://user-images.githubusercontent.com/38034518/146636837-b460bddd-b9d6-4b51-a48b-277458eceefc.png)
+<br>
+<h3><strong><span style="color: rgb(38, 38, 38); font-family: -apple-system, 'system-ui', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" data-raw-html="span">📌</span> 개발하면서 작성한 포스팅</strong></h3>
+<ul>
+  <li>
+    <strong>
+      <a href="https://juni-official.tistory.com/217">
+        <span style="color: #2f80ff" data-raw-html="span">
+          티스토리 블로그 썸네일 메이커
+        </span>
+      </a>
+    </strong>
+  </li>
+  <li>
+    <strong>
+      <a href="https://juni-official.tistory.com/215">
+        <span style="color: #2f80ff" data-raw-html="span">
+          [JS] 자바스크립트 캔버스 단색, 그라데이션 배경 그리기
+        </span>
+      </a>
+    </strong>
+  </li>
+</ul>
