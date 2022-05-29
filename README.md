@@ -1,7 +1,4 @@
-# ✨ Thumbnail-Maker ✨ [링크](https://thumbnail-maker.web.app/)
-
-
-<h2><strong>썸네일 메이커</strong>  -> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
+<h2><strong>썸네일 메이커</strong>  -> <a href='https://thumbnail-maker.web.app/' target="_black">🔗 Link</a></h2>
 
 <br>
 <img src="https://i0.wp.com/user-images.githubusercontent.com/38034518/153426584-86e21b47-4f59-476c-9330-e829be713def.png?w=750&ssl=1" alt="thumb-maker" width="100%" />
