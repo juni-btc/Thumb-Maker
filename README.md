@@ -1,16 +1,13 @@
 # ✨ Thumbnail-Maker ✨ [링크](https://thumbnail-maker.web.app/)
 
-![image](https://i0.wp.com/user-images.githubusercontent.com/38034518/153426584-86e21b47-4f59-476c-9330-e829be713def.png?w=750&ssl=1)
 
 <h2><strong>썸네일 메이커</strong>  -> <a href='https://www.simple-forum.site/' target="_black">🔗 Link</a></h2>
+
 <br>
-<img src="https://user-images.githubusercontent.com/38034518/156158206-a8cde8a0-ad0a-4288-8348-5073bc39c162.png" alt="simple-forum.png">
+<img src="https://i0.wp.com/user-images.githubusercontent.com/38034518/153426584-86e21b47-4f59-476c-9330-e829be713def.png?w=750&ssl=1" alt="thumb-maker" width="100%" />
 <br>
 썸네일 메이커는 블로그를 운영하면서 불편했던 점인 썸네일을 쉽게 만들기 위해 리액트로 제작된 웹사이트입니다. 반응형으로 모바일 환경에서도 사용할 수 있습니다.
 <br/><br/>
-
-<ul><li>Simpe Forum -> 🔗 <strong><a href="https://github.com/junheeleeme/Thumb-Maker"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li><li>썸네일 메이커 -> 🔗 <strong><a href="https://github.com/junheeleeme/Thumb-Maker"><span style="color: #0070ff" data-raw-html="span">Github</span></a></strong></li></ul>
-
 
 <br>
 <h3><strong><span style="color: rgb(38, 38, 38); font-family: -apple-system, 'system-ui', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;" data-raw-html="span">📌</span> 개발 기간</strong></h3>
