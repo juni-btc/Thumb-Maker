@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "thumbnail-maker"
-  }
+    "default": "thumbnail-maker",
+    "thumb-maker": "thumbnailmaker-8d785"
+  },
+  "targets": {}
 }
