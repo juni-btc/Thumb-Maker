@@ -13,7 +13,7 @@ const Header = () => {
               썸네일 메이커
             </a>
           </h1>
-          <a href="https://github.com/juni-btc/Thumb-Maker" target="_blnak" className="git-icon">
+          <a href="https://github.com/macjjuni/Thumb-Maker" target="_blnak" className="git-icon">
             <BsGithub fontSize={30} color="#000" />
           </a>
         </div>
